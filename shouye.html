@@ -1,0 +1,254 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>首页</title>
+    <link type="text/css" rel="stylesheet" href="css/main.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.corner.js"></script>
+    <script src="js/jquery.roundabout.js"></script>
+    <script src="js/jquery.roundabout-shapes.js"></script>
+    <script>
+        //首页轮番图效果
+        $(document).ready(function(){
+            var num=$('.top-banner_span span').length;
+            var i_mun=0;
+            var timer_banner=null;
+
+            $('.top-banner .banners li:gt(0)').hide();//页面加载隐藏所有的li 除了第一个
+
+//底下小图标点击切换
+            $('.top-banner_span span').click(function(){
+                $(this).addClass('top-banner_span_one')
+                        .siblings('span').removeClass('top-banner_span_one');
+                var i_mun1=$('.top-banner_span span').index(this);
+                $('.top-banner .banners li').eq(i_mun1).fadeIn('slow')
+                        .siblings('li').hide();
+
+                i_mun=i_mun1;
+            });
+
+//左边箭头点击时切换
+            $('.top-banner_left').click(function(){
+                if(i_mun==0){
+                    i_mun=num
+                }
+                //大图切换
+                $('.top-banner .banners li').eq(i_mun-1).fadeIn('slow')
+                        .siblings('li').hide();
+                //小图切换
+                $('.top-banner_span span').eq(i_mun-1).addClass('top-banner_span_one')
+                        .siblings('span').removeClass('top-banner_span_one');
+
+                i_mun--
+            });
+
+//右边箭头点击时切换
+            $('.top-banner_right').click(function(){
+                move_banner()
+
+            });
+
+////            自动播放函数
+//             function bannerMoveks(){
+//                 timer_banner=setInterval(function(){
+//                     move_banner()
+//                 },4000)
+//             };
+//             bannerMoveks();//开始自动播放
+//            
+//             //鼠标移动到banner上时停止播放
+//             $('.top-banner').mouseover(function(){
+//                 clearInterval(timer_banner);
+//             });
+//            
+//             //鼠标离开 banner 开启定时播放
+//             $('.top-banner').mouseout(function(){
+//                 bannerMoveks();
+//             });
+
+
+//banner 右边点击执行函数
+            function move_banner(){
+                if(i_mun==num-1){
+                    i_mun=-1
+                }
+                //大图切换
+                $('.top-banner .banners li').eq(i_mun+1).fadeIn('slow')
+                        .siblings('li').hide();
+                //小图切换
+                $('.top-banner_span span').eq(i_mun+1).addClass('top-banner_span_one')
+                        .siblings('span').removeClass('top-banner_span_one');
+
+                i_mun++
+
+            }
+        })
+    </script>
+</head>
+<body>
+
+<div class="wrap">
+    <div class="mainContent">
+        <div class="header">
+            <div class="header-outer">
+                <div class="header-logo" style="border: 0px solid black;">
+                    <img src="image/logo1.png" width="84px" height="20px" alt="">
+                    <span style="color: black;font-size: 14px;font-weight: 600;">北京同创共享网络科技有限公司</span>
+                </div>
+                <div class="header-navbar">
+                    <nav class="navbar">
+                        <li><a style="background:black;color:white;font-size:18px;">首页</a>
+                        </li>
+                        <li><a>新闻概要</a>
+                        </li>
+                        <li id="app">
+                            <a >APP</a>
+                            <p>
+                            <a href="<?= \yii\helpers\Url::toRoute('/site/sdj-app')?>">顺道嘉</a>
+                            </p>
+                            <p>
+                            <a href="<?= \yii\helpers\Url::toRoute('/site/seller-app')?>">商家版</a>
+                            </p>
+                        </li>
+                        <li>
+                        <a href="<?= \yii\helpers\Url::toRoute('/site/activity')?>">最新活动</a>
+                        </li>
+                        <li >
+                        <a href="<?= \yii\helpers\Url::toRoute('/site/best-sellers')?>">优秀品牌商</a>
+                        </li>
+                        <li>
+                        <a href="<?= \yii\helpers\Url::toRoute('/site/join')?>">招商加盟</a>
+                        </li>
+                        <li>
+                        <a href="<?= \yii\helpers\Url::toRoute('/site/contact')?>">联系我们</a>
+                        </li>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="site">
+            <?= $content ?>
+        </div>
+    </div>
+</div>
+
+<div class="top-banner">
+    <div class="top-banner banners">
+        <ul>
+            <li><img src="image/lun1.jpg" alt=""> </li>
+            <li><img src="image/lun2.jpg" alt=""> </li>
+            <li><img src="image/lun3.jpg" alt=""> </li>
+            <li><img src="image/lun4.jpg" alt=""> </li>
+        </ul>
+    </div>
+    <div class="top-banner_span">
+        <p>
+            <span class="top-banner_span_one"></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </p>
+    </div>
+
+</div>
+
+<div class="index-3d-banner">
+    <div class="title">
+        <p style="font-size:28px;color:#333333;text-align:center;">
+            <span style="text-decoration:line-through;font-size:28px;margin-right:30px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>顺道嘉新闻快报<span style="text-decoration:line-through;font-size:28px;margin-left:30px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        </p>
+    </div>
+    <div id="gla">
+        <div id="gla_box">
+            <span class="prev"><img src="image/left.png"/></span>
+            <span class="next"><img src="image/right.png"/></span>
+            <ul>
+                <li>
+                    <div class="gla_inbox">
+                        <a href="" target="_blank"> <img src="image/lun01.jpg" border="0"></a>
+                        <div class="img_cont">
+                            《宝贝儿去哪儿》第一期录制现场
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="gla_inbox" >
+                        <a href="" target="_blank"> <img src="image/lun02.jpg" border="0"></a>
+                        <div class="img_cont">
+                            《宝贝儿去哪儿》海选现场
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="gla_inbox" >
+                        <a href="" target="_blank"> <img src="image/lun03.jpg" border="0"></a>
+                        <div class="img_cont">
+                            《2017光明双创公益行》启动仪式
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="gla_inbox" >
+                        <a href="" target="_blank"> <img src="image/lun04.jpg" border="0"></a>
+                        <div class="img_cont">
+                            《2017光明双创公益行新闻发布会》
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="gla_inbox" >
+                        <a href="" target="_blank"> <img src="image/lun05.jpg" border="0"></a>
+                        <div class="img_cont">
+                            《后创业时代的创业生态研讨会》
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div class="qrcodes">
+    <div class="qrcodes_align">
+        <div class="qrcode1">
+            <div class="code-room">
+                <img src="image/qrcode-member.png" style="width:100%;">
+            </div>
+            <h5>扫描下载用户版</h5>
+        </div>
+        <div class="qrcode2">
+            <div class="code-room">
+                <img src="image/qrcode-merchant.png" style="width:100%;">
+            </div>
+
+            <h5>扫描下载商家版</h5>
+        </div>
+        <div class="qrcode3">
+            <div class="code-room">
+                <img src="image/qrcode-public.png" style="width:100%;">
+            </div>
+
+            <h5>关注微信公众号</h5>
+        </div>
+    </div>
+
+</div>
+
+
+
+<div id="footer">
+    <p>北京同创共享网络科技有限公司</p>
+    <p>
+        公司地址：北京市通州区榆景东路金融街园中园5号院56号楼<br>
+        客服热线：4000-111-228&nbsp;&nbsp;&nbsp;
+        京ICP备16041276号-1&nbsp;&nbsp;&nbsp;
+    </p>
+    <!--<!--<!--    <div style="display:none;"><script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260265653'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1260265653' type='text/javascript'%3E%3C/script%3E"));</script></div>-->
+</div>
+
+
+</body>
+
+</html>
+

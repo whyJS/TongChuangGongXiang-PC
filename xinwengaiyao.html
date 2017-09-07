@@ -1,0 +1,276 @@
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>新闻概要</title>
+
+		<script type="text/javascript" src="js/jquery-1.11.0.js"></script>
+		<script src="js/jquery.js"></script>
+		<!--  <script type="text/javascript" src="js/xinwengaiyao.js" ></script>-->
+		<link type="text/css" rel="stylesheet" href="css/main.css">
+
+		<style type="text/css">
+
+		</style>
+		<script type="text/javascript">
+			//首页轮番图效果
+			$(document).ready(function() {
+				var num = $('#d3 span').length;
+				var i_mun = 0;
+				var timer_banner = null;
+
+				$('#d1 li:gt(0)').hide(); //页面加载隐藏所有的li 除了第一个
+
+				//底下小图标点击切换
+				$('#d3 span').click(function() {
+					$(this).addClass('xuanzhong')
+						.siblings('#d3 span').removeClass('xuanzhong');
+					var i_mun1 = $('#d3 span').index(this);
+					$('#d1 li').eq(i_mun1).fadeIn('slow')
+						.siblings('li').hide();
+//新闻背景色
+						$('#d2 div').eq(i_mun1).addClass('d2_xw_bj')
+						.siblings('div').removeClass('d2_xw_bj');
+					i_mun = i_mun1;
+				});
+				//右侧新闻
+				$('#d2 ul div').click(function() {
+
+					var i_mun1 = $('#d2 ul div').index(this);
+					$('#d3 span').eq(i_mun1).addClass('xuanzhong')
+						.siblings('#d3 span').removeClass('xuanzhong');
+						//新闻背景色
+						$(this).addClass('d2_xw_bj')
+						.siblings('div').removeClass('d2_xw_bj');
+						
+					$('#d1 li').eq(i_mun1).fadeIn('slow')
+						.siblings('li').hide();
+
+					i_mun = i_mun1;
+				});
+				//自动轮播
+				function move_banner() {
+					if(i_mun == num - 1) {
+						i_mun = -1
+					}
+					//大图切换
+					$('#d1 li').eq(i_mun + 1).fadeIn('slow')
+						.siblings('li').hide();
+					//小图切换
+					$('#d3 span').eq(i_mun + 1).addClass('xuanzhong')
+						.siblings('span').removeClass('xuanzhong');
+						//背景色
+						$('#d2 div').eq(i_mun + 1).addClass('d2_xw_bj')
+						.siblings('div').removeClass('d2_xw_bj');
+
+					i_mun++
+
+				}
+				////            自动播放函数
+				function bannerMoveks() {
+					timer_banner = setInterval(function() {
+						move_banner()
+					}, 4000)
+				};
+				bannerMoveks(); //开始自动播放
+
+			//鼠标移动到banner上时停止播放
+               $('#d1').mouseover(function(){
+                   clearInterval(timer_banner);
+                   console.log("qq");
+               });
+              
+               //鼠标离开 banner 开启定时播放
+               $('#d1').mouseout(function(){
+                   bannerMoveks();
+               });	
+			});
+			 
+
+		</script>
+		<style type="text/css">
+			.d2_xw_bj{
+				background: red;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="wrap">
+			<div class="mainContent">
+				<div class="header">
+					<div class="header-outer">
+						<div class="header-logo" style="border: 0px solid black;">
+							<img src="image/logo1.png" width="84px" height="20px" alt="">
+							<span style="color: black;font-size: 14px;font-weight: 600;">北京同创共享网络科技有限公司</span>
+						</div>
+						<div class="header-navbar">
+							<nav class="navbar">
+								<li class="navbar_l1">
+									<a href="">首页</a>
+								</li>
+								<li>
+									<a href="" style="background:black;color:white;font-size:18px;">新闻概要</a>
+								</li>
+								<li id="app">
+									<a>APP</a>
+									<p>
+										<a href="<?= \yii\helpers\Url::toRoute('/site/sdj-app')?>">顺道嘉</a>
+									</p>
+									<p>
+										<a href="<?= \yii\helpers\Url::toRoute('/site/seller-app')?>">商家版</a>
+									</p>
+								</li>
+								<li>
+									<a href="<?= \yii\helpers\Url::toRoute('/site/activity')?>">最新活动</a>
+								</li>
+								<li>
+									<a href="<?= \yii\helpers\Url::toRoute('/site/best-sellers')?>">优秀品牌商</a>
+								</li>
+								<li>
+									<a href="<?= \yii\helpers\Url::toRoute('/site/join')?>">招商加盟</a>
+								</li>
+								<li>
+									<a href="<?= \yii\helpers\Url::toRoute('/site/contact')?>">联系我们</a>
+								</li>
+							</nav>
+						</div>
+					</div>
+				</div>
+				<!--<div class="site">
+            <?= $content ?>
+        </div>-->
+			</div>
+		</div>
+
+		<!--内容-->
+
+		<div class="news">
+			<div class="news-banner">
+				<ul>
+					<li><img src="image/newsbanner.png" alt=""></li>
+				</ul>
+			</div>
+			<div class="news-content">
+				<div class="news-type-list">
+					<ul>
+						<li>
+							<a href="<?= \yii\helpers\Url::toRoute('/site/about')?>">新闻公告</a>
+						</li>
+						<li style="background: rgb(51,49,41);">
+							<a href="<?= \yii\helpers\Url::toRoute('site/about-culture')?>" style="color: white;">行业新闻</a>
+						</li>
+						<li>
+							<a href="<?= \yii\helpers\Url::toRoute('/site/about-news')?>">新闻专题</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="news-content-list">
+					<div class="news-top-list">
+						<div id="d1">
+							<ul>
+								<li> <img src="image/lun02.jpg"></li>
+								<li><img src="image/lun03.jpg"></li>
+								<li> <img src="image/lun02.jpg"></li>
+								<li> <img src="image/lun02.jpg"></li>
+								<li><img src="image/lun03.jpg"></li>
+								<li> <img src="image/lun02.jpg"></li>
+
+							</ul>
+						</div>
+						<div id="d2" style="overflow: auto;">
+							<ul>
+								<div class="d2_xw_bj">
+									<li>blablablablablablabla</li>
+									<a href=""><span>查看更多</span></a>
+								</div>
+								<div >
+									<li>blablablablablablabla again</li>
+									<a href=""><span>查看更多</span></a>
+								</div>
+								<div >
+									<li>blablablablablablabla again and again</li>
+									<a href=""><span>查看更多</span></a>
+								</div>
+								<div>
+									<li>blablablablablablabla</li>
+									<a href=""><span>查看更多</span></a>
+								</div>
+								<div >
+									<li>blablablablablablabla again</li>
+									<a href=""><span>查看更多</span></a>
+								</div>
+								<div >
+									<li>blablablablablablabla again and again</li>
+									<a href=""><span>查看更多</span></a>
+								</div>
+							</ul>
+						</div>
+						<div id="d3">
+							<p>
+								<span class="xuanzhong">1</span>
+								<span>2</span>
+								<span>3</span>
+								<span>4</span>
+								<span>5</span>
+								<span>6</span>
+
+							</p>
+						</div>
+
+					</div>
+
+					<div class="news-bottom-list">
+						<div class="news-items">
+							<img src="image/testpic2.jpg">
+							<h4>标题标题标题标题</h4>
+							<p>&nbsp;&nbsp;&nbsp;blablabla blablablablabla blablablablabla blablablablabla blablablablabla blablablablabla blablablablabla</p>
+						</div>
+						<div class="news-items">
+							<img src="image/testpic2.jpg">
+							<h4>标题标题标题标题</h4>
+							<p>&nbsp;&nbsp;&nbsp;blablabla blablablablabla blablablablabla blablablablabla blablablablabla blablablablabla blablablablabla</p>
+						</div>
+						<div class="news-items">
+							<img src="image/testpic2.jpg">
+							<h4>标题标题标题标题</h4>
+							<p>&nbsp;&nbsp;&nbsp;blablabla blablablablabla blablablablabla blablablablabla blablablablabla blablablablabla blablablablabla</p>
+						</div>
+						<div class="news-items">
+							<img src="image/testpic2.jpg">
+							<h4>标题标题标题标题</h4>
+							<p>&nbsp;&nbsp;&nbsp;blablabla blablablablabla blablablablabla blablablablabla blablablablabla blablablablabla blablablablabla</p>
+						</div>
+						<div class="news-items">
+							<img src="image/testpic2.jpg">
+							<h4>标题标题标题标题</h4>
+							<p>&nbsp;&nbsp;&nbsp;blablabla blablablablabla blablablablabla blablablablabla blablablablabla blablablablabla blablablablabla</p>
+						</div>
+						<div class="news-items">
+							<img src="image/testpic2.jpg">
+							<h4>标题标题标题标题</h4>
+							<p>&nbsp;&nbsp;&nbsp;blablabla blablablablabla blablablablabla blablablablabla blablablablabla blablablablabla blablablablabla</p>
+						</div>
+					</div>
+					<div class="news-formore">
+						<a href=""><span>更多</span> >> </a>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div id="footer">
+			<p>北京同创共享网络科技有限公司</p>
+			<p>
+				公司地址：北京市通州区榆景东路金融街园中园5号院56号楼<br> 客服热线：4000-111-228&nbsp;&nbsp;&nbsp; 京ICP备16041276号-1&nbsp;&nbsp;&nbsp;
+			</p>
+			<!--<!--<!--    <div style="display:none;"><script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260265653'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1260265653' type='text/javascript'%3E%3C/script%3E"));</script></div>-->
+		</div>
+
+	</body>
+
+</html>
